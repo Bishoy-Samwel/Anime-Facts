@@ -1,5 +1,5 @@
 import React from 'react';
-import Element from '../Details/Element';
+import Element from './Element';
 import styles from './Elements.module.scss';
 
 const Elements = () => {
@@ -11,6 +11,7 @@ const Elements = () => {
     { id: '5', name: 'Italy', number: '5' },
     { id: '6', name: 'Italy', number: '6' },
     { id: '7', name: 'Italy', number: '7' },
+    { id: '8', name: 'Italy', number: '8' },
   ];
   return (
     <div className={styles['elements-div']}>
