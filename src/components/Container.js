@@ -20,7 +20,7 @@ function Container() {
         <Route exact path="/">
           <Elements />
         </Route>
-        <Route path="/details">
+        <Route path="/details/:itemId">
           <Details />
         </Route>
       </Switch>
