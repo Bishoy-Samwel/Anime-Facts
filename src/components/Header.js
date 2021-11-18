@@ -5,7 +5,7 @@ import styles from './Header.module.scss';
 const Header = () => (
   <header className={styles.header}>
     <div className={styles.left}>
-      <NavLink to="/rockets">
+      <NavLink to="/">
         <MdArrowBackIos color="white" size="20" />
       </NavLink>
     </div>
