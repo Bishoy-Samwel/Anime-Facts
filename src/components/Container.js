@@ -1,9 +1,9 @@
 import Header from './Header';
-// import Elements from './ElementsInfo/Elements';
 import Banner from './Home/Banner';
 import styles from './Container.module.scss';
 import PageInfo from './PageInfo';
-import { Details } from './ElementDetails/Details';
+import Elements from './ElementsInfo/Elements';
+// import { Details } from './ElementDetails/Details';
 
 function Container() {
   return (
@@ -11,8 +11,8 @@ function Container() {
       <Header />
       <PageInfo />
       <Banner />
-      {/* <Elements /> */}
-      <Details />
+      <Elements />
+      {/* <Details /> */}
     </div>
   );
 }
