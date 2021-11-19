@@ -1,0 +1,11 @@
+@use "../styles/variables" as *;
+
+.container {
+  font-size: large;
+  font-weight: bolder;
+  color: $font-color;
+}
+
+img {
+  filter: opacity(0.1) grayscale(10%);
+}

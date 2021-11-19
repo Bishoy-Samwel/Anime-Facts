@@ -1,0 +1,11 @@
+@use "../styles/variables" as *;
+
+.page-info {
+  background-color: $page-info;
+
+  p {
+    margin: 0 2%;
+    padding: 2px 0;
+    font-weight: bold;
+  }
+}

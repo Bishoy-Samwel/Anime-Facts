@@ -13,6 +13,7 @@
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
@@ -20,6 +21,8 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.4.0",
+    "reselect": "^4.1.4",
+    "sass": "^1.43.4",
     "typescript": "^4.4.2",
     "uniqid": "^5.4.0",
     "uuid": "^8.3.2"

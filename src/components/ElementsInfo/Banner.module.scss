@@ -1,0 +1,26 @@
+@use "../../styles/variables" as *;
+
+.banner-div {
+  background-color: $banner-color;
+  display: flex;
+  align-items: center;
+
+  .element-left {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+  }
+
+  img {
+    width: 50%;
+    margin: 10% auto;
+  }
+
+  .element-right {
+    flex: 1;
+    display: flex;
+    justify-self: start;
+    justify-content: start;
+    align-items: center;
+  }
+}
