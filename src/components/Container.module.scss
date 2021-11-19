@@ -7,5 +7,7 @@
 }
 
 img {
-  filter: opacity(0.1) grayscale(10%);
+  max-height: 300px;
+  border-radius: 50px;
+  filter: opacity(0.4) grayscale(10%);
 }
