@@ -19,7 +19,7 @@ const Element = props => {
         <BsArrowRightCircle onClick={clickHanlder} color="white" className={styles['nav-arrow']} />
       </NavLink>
       <div className={styles.top}>
-        <img src="http://pngimg.com/uploads/chess/chess_PNG8443.png" alt="chess-family" />
+        <img src={element.imgUrl} alt="chess-family" />
       </div>
       <div className={styles.bottom}>
         {element.name}
