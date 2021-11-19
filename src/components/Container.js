@@ -14,8 +14,8 @@ function Container() {
   return (
     <div className={styles.container}>
       <Header />
-      <PageInfo />
       <Banner />
+      <PageInfo />
       <Switch>
         <Route exact path="/">
           <Elements />
