@@ -1,6 +1,9 @@
 // Actions
-const LOAD_ELEMENTS = 'LOAD_ELEMENTS';
+
 const MODIFY_BANNER = 'MODIFY_BANNER';
+const LOAD_ELEMENTS_IN_PROGRESS = 'LOAD_ELEMENTS_IN_PROGRESS';
+const LOAD_ELEMENTS_SUCCESS = 'LOAD_ELEMENTS_SUCCESS';
+const LOAD_ELEMENTS_FAILURE = 'LOAD_ROCKETS_FAILURE';
 // Reducer
 const InitialData = [
   {
@@ -31,13 +34,23 @@ const InitialData = [
 
 const InitialBanner = 'Banner Text';
 
-const initialState = { data: InitialData, banner: InitialBanner };
+const initialState = { isLoading: false, data: InitialData, banner: InitialBanner };
 export const elementsReducer = (state = initialState, action = {}) => {
   const { type, payload } = action;
   switch (type) {
-    case LOAD_ELEMENTS: {
-      return state.data;
+    case LOAD_ELEMENTS_SUCCESS: {
+      const { elements } = payload;
+      return { ...state, isLoading: false, data: elements };
     }
+    case LOAD_ELEMENTS_IN_PROGRESS:
+      return {
+        ...state, isLoading: true,
+      };
+    case LOAD_ELEMENTS_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+      };
     case MODIFY_BANNER: {
       return payload ? { ...state, banner: payload } : { ...state, banner: InitialBanner };
     }
@@ -46,8 +59,39 @@ export const elementsReducer = (state = initialState, action = {}) => {
   }
 };
 // Action Creators
-export const loadElements = () => ({ type: LOAD_ELEMENTS });
 export const modifyBanner = obj => ({ type: MODIFY_BANNER, payload: obj });
+const loadElementsInProgress = () => ({ type: LOAD_ELEMENTS_IN_PROGRESS });
 
+const loadElementsSuccess = elements => ({ type: LOAD_ELEMENTS_SUCCESS, payload: { elements } });
+
+const loadElementsFailure = () => ({ type: LOAD_ELEMENTS_FAILURE });
 // side effects, only as applicable
 // e.g. thunks, epics, etc
+
+export const loadElements = () => (
+  async dispatch => {
+    try {
+      dispatch(loadElementsInProgress());
+      const response = await fetch('https://anime-facts-rest-api.herokuapp.com/api/v1');
+      const obj = await response.json();
+      const elmentsData = await obj.data;
+      dispatch(loadElementsSuccess(elmentsData));
+    } catch (e) {
+      dispatch(loadElementsFailure());
+    }
+  }
+);
+
+export const loadElementDetails = animeName => (
+  async dispatch => {
+    try {
+      dispatch(loadElementsInProgress());
+      const response = await fetch(`https://anime-facts-rest-api.herokuapp.com/api/v1/${animeName}`);
+      const obj = await response.json();
+      const elmentsData = await obj.data;
+      dispatch(loadElementsSuccess(elmentsData));
+    } catch (e) {
+      dispatch(loadElementsFailure());
+    }
+  }
+);
