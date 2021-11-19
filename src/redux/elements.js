@@ -4,6 +4,7 @@ const MODIFY_BANNER = 'MODIFY_BANNER';
 const LOAD_ELEMENTS_IN_PROGRESS = 'LOAD_ELEMENTS_IN_PROGRESS';
 const LOAD_ELEMENTS_SUCCESS = 'LOAD_ELEMENTS_SUCCESS';
 const LOAD_ELEMENTS_FAILURE = 'LOAD_ROCKETS_FAILURE';
+const LOAD_ELEMENT_DETAILS = 'LOAD_ELEMENT_DETAILS';
 // Reducer
 const InitialData = [
   {
@@ -51,6 +52,13 @@ export const elementsReducer = (state = initialState, action = {}) => {
         ...state,
         isLoading: false,
       };
+    case LOAD_ELEMENT_DETAILS: {
+      const { id, elemData } = payload;
+
+      const addData = element => (element.anime_id === id ? { ...element, elemData } : element);
+
+      return { ...state, data: state.data.map(addData) };
+    }
     case MODIFY_BANNER: {
       return payload ? { ...state, banner: payload } : { ...state, banner: InitialBanner };
     }
@@ -60,11 +68,15 @@ export const elementsReducer = (state = initialState, action = {}) => {
 };
 // Action Creators
 export const modifyBanner = obj => ({ type: MODIFY_BANNER, payload: obj });
+
 const loadElementsInProgress = () => ({ type: LOAD_ELEMENTS_IN_PROGRESS });
 
 const loadElementsSuccess = elements => ({ type: LOAD_ELEMENTS_SUCCESS, payload: { elements } });
 
 const loadElementsFailure = () => ({ type: LOAD_ELEMENTS_FAILURE });
+
+const AddElementDetails = (id, elemData) => (
+  { type: LOAD_ELEMENT_DETAILS, payload: { id, elemData } });
 // side effects, only as applicable
 // e.g. thunks, epics, etc
 
@@ -82,14 +94,14 @@ export const loadElements = () => (
   }
 );
 
-export const loadElementDetails = animeName => (
+export const loadElementDetails = (id, animeName) => (
   async dispatch => {
     try {
-      dispatch(loadElementsInProgress());
       const response = await fetch(`https://anime-facts-rest-api.herokuapp.com/api/v1/${animeName}`);
       const obj = await response.json();
       const elmentsData = await obj.data;
-      dispatch(loadElementsSuccess(elmentsData));
+      dispatch(AddElementDetails(id, elmentsData));
+      dispatch(modifyBanner(id));
     } catch (e) {
       dispatch(loadElementsFailure());
     }
