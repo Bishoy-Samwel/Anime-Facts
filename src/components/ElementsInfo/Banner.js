@@ -3,7 +3,6 @@ import styles from './Banner.module.scss';
 
 const Banner = () => {
   const text = useSelector(state => state.elements.banner);
-  console.log(text);
   const content = text => (
     <div className={styles['banner-div']}>
       <div className={styles['element-left']}>

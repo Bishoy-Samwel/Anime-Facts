@@ -10,20 +10,20 @@ import { modifyBanner } from '../../redux/elements';
 const Element = props => {
   const dispatch = useDispatch();
   const { element } = props;
+  const animeName = (element.anime_name) ? element.anime_name.replace(/_/g, ' ') : '';
   const clickHanlder = () => {
-    dispatch(modifyBanner(element.id));
+    dispatch(modifyBanner(element.anime_id));
   };
   return (
-    <div className={styles['element-div']} key={element.id}>
-      <NavLink to={`/details/${element.id}`} exact>
+    <div className={styles['element-div']} key={element.anime_id}>
+      <NavLink to={`/details/${element.anime_id}`} exact>
         <BsArrowRightCircle onClick={clickHanlder} color="white" className={styles['nav-arrow']} />
       </NavLink>
       <div className={styles.top}>
-        <img src={element.imgUrl} alt="chess-family" />
+        <img src={element.anime_img} alt="chess-family" />
       </div>
       <div className={styles.bottom}>
-        {element.name}
-        {element.number}
+        {animeName}
       </div>
     </div>
   );
