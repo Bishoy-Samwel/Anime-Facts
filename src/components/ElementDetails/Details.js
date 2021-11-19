@@ -1,22 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import styles from './Details.module.scss';
 import Detail from './Detail';
+import { getElement } from '../selectors';
 
 export const Details = () => {
-  const details = [
-    { id: '1', name: 'Italy', number: '1' },
-    { id: '2', name: 'Italy', number: '2' },
-    { id: '3', name: 'Italy', number: '3' },
-    { id: '4', name: 'Italy', number: '4' },
-    { id: '5', name: 'Italy', number: '5' },
-    { id: '6', name: 'Italy', number: '6' },
-    { id: '7', name: 'Italy', number: '7' },
-  ];
+  const { details } = useSelector(getElement('1'))[0];
   return (
     <div className={styles['details-div']}>
       {
-        details.map(detail => <Detail key={detail.id} detail={detail} />)
+        // eslint-disable-next-line max-len
+        Object.keys(details).map(detailKey => <Detail key={detailKey} detailKey={detailKey} detail={details[detailKey]} />)
       }
     </div>
   );
