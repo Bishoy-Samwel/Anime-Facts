@@ -1,6 +1,3 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable max-len */
-/* eslint-disable indent */
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -13,7 +10,7 @@ const Details = () => {
   const detailsLoading = useSelector(detailsIsLoading);
 
   if (!detailsLoading && element.elemData) {
-    return (element.elemData.map(detail => <Detail detail={detail.fact} />));
+    return (element.elemData.map(detail => <Detail key={element.anime_id} detail={detail.fact} />));
   }
   return ('wait a minute');
 };

@@ -1,7 +1,7 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { BsArrowRightCircle } from 'react-icons/bs';
 import { NavLink } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
 
 import { useDispatch } from 'react-redux';
 import styles from './Element.module.scss';
@@ -35,3 +35,7 @@ const Element = props => {
 };
 
 export default Element;
+
+Element.propTypes = {
+  element: PropTypes.shape.isRequired,
+};
