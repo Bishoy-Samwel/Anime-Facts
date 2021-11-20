@@ -1,4 +1,4 @@
-# metrics-webapp
+# Anime-facts-webapp
 
 A mobile web application that checks a list of Animes that is been created from the data fetched from a Anime facts API.
 
