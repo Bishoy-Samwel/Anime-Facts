@@ -1,6 +1,6 @@
 # Anime-facts-webapp
 
-A mobile web application that checks a list of Animes that is been created from the data fetched from a Anime facts API.
+A mobile web application that checks a list of Animes that is been created from the data fetched from a Anime facts API https://chandan-02.github.io/anime-facts-rest-api/.
 
 - ![Elements](https://user-images.githubusercontent.com/29541335/142738592-a00d625c-9e33-4e81-a720-dd5f72579f7b.png)
 
