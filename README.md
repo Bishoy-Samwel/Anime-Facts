@@ -14,6 +14,10 @@ A mobile web application that checks a list of Animes that is been created from 
 - JAVASCRIPT
 - React && Redux
 
+## Live demo 
+- https://chandan-02.github.io/anime-facts-rest-api/
+
+## Video Demo 
 
 ## Getting Started
 
