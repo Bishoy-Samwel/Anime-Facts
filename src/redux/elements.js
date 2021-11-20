@@ -1,6 +1,7 @@
 // Actions
 
 const MODIFY_BANNER = 'MODIFY_BANNER';
+const FILTER_EMENETS = 'FILTER_EMENETS';
 const LOAD_ELEMENTS_IN_PROGRESS = 'LOAD_ELEMENTS_IN_PROGRESS';
 const LOAD_ELEMENTS_SUCCESS = 'LOAD_ELEMENTS_SUCCESS';
 const LOAD_ELEMENTS_FAILURE = 'LOAD_ROCKETS_FAILURE';
@@ -37,10 +38,22 @@ const initialState = {
   detailsIsLoading: false,
   data: InitialData,
   banner: { text, img_url: imgUrl },
+  filter: '',
 };
 export const elementsReducer = (state = initialState, action = {}) => {
   const { type, payload } = action;
   switch (type) {
+    case FILTER_EMENETS:
+    {
+      if (payload.trim()) return ({ ...state, filter: payload });
+      return state;
+    }
+
+    case MODIFY_BANNER: {
+      return payload ? { ...state, banner: payload }
+        : { ...state, banner: { ...state.baner, text, img_url: imgUrl } };
+    }
+
     case LOAD_ELEMENTS_SUCCESS: {
       const { elements } = payload;
       return {
@@ -74,16 +87,14 @@ export const elementsReducer = (state = initialState, action = {}) => {
         detailsIsLoading: false,
       };
 
-    case MODIFY_BANNER: {
-      return payload ? { ...state, banner: payload }
-        : { ...state, banner: { ...state.baner, text, img_url: imgUrl } };
-    }
     // do reducer stuff
     default: return state;
   }
 };
 // Action Creators
 export const modifyBanner = obj => ({ type: MODIFY_BANNER, payload: obj });
+
+export const filterElements = term => ({ type: FILTER_EMENETS, payload: term });
 
 const loadElementsInProgress = () => ({ type: LOAD_ELEMENTS_IN_PROGRESS });
 
