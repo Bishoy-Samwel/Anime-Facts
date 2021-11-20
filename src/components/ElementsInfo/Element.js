@@ -23,10 +23,12 @@ const Element = props => {
         <BsArrowRightCircle onClick={clickHanlder} color="white" className={styles['nav-arrow']} />
       </NavLink>
       <div className={styles.top}>
-        <img src={element.anime_img} alt="chess-family" />
+        <img src={element.anime_img} alt={element.anime_img} />
       </div>
       <div className={styles.bottom}>
         {animeName}
+        <br />
+        {element.anime_id}
       </div>
     </div>
   );
