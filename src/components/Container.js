@@ -8,7 +8,8 @@ import styles from './Container.module.scss';
 import PageInfo from './PageInfo';
 import Banner from './ElementsInfo/Banner';
 import Elements from './ElementsInfo/Elements';
-import { Details } from './ElementDetails/Details';
+import Details from './ElementDetails/Details';
+import Search from './Search';
 
 function Container() {
   return (
@@ -18,6 +19,7 @@ function Container() {
       <PageInfo />
       <Switch>
         <Route exact path="/">
+          <Search />
           <Elements />
         </Route>
         <Route path="/details/:itemId">
