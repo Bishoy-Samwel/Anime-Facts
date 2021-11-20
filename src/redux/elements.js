@@ -4,7 +4,9 @@ const MODIFY_BANNER = 'MODIFY_BANNER';
 const LOAD_ELEMENTS_IN_PROGRESS = 'LOAD_ELEMENTS_IN_PROGRESS';
 const LOAD_ELEMENTS_SUCCESS = 'LOAD_ELEMENTS_SUCCESS';
 const LOAD_ELEMENTS_FAILURE = 'LOAD_ROCKETS_FAILURE';
-const LOAD_ELEMENT_DETAILS = 'LOAD_ELEMENT_DETAILS';
+const LOAD_ELEMENT_DATA_IN_PROGRESS = 'LOAD_ELEMENT_DATA_IN_PROGRESS';
+const LOAD_ELEMENT_DATA_SUCCESS = 'LOAD_ELEMENT_DATA_SUCCESS';
+const LOAD_ELEMENT_DATA_FAILURE = 'LOAD_ELEMENT_DATA_FAILURE';
 // Reducer
 const InitialData = [
   {
@@ -25,42 +27,56 @@ const InitialData = [
   {
     id: '6', name: 'Italy', number: '6', imgUrl: 'http://pngimg.com/uploads/chess/chess_PNG8443.png', details: { start: '1996', end: '2026' },
   },
-  {
-    id: '7', name: 'Italy', number: '7', imgUrl: 'http://pngimg.com/uploads/chess/chess_PNG8443.png', details: { start: '1996', end: '2027' },
-  },
-  {
-    id: '8', name: 'Italy', number: '8', imgUrl: 'http://pngimg.com/uploads/chess/chess_PNG8443.png', details: { start: '1996', end: '2028' },
-  },
 ];
 
-const InitialBanner = 'Banner Text';
+const imgUrl = 'https://www.pngall.com/wp-content/uploads/2/Manga-PNG-Picture.png';
+const text = 'Did you know!!';
 
-const initialState = { isLoading: false, data: InitialData, banner: InitialBanner };
+const initialState = {
+  elementsIsLoading: false,
+  detailsIsLoading: false,
+  data: InitialData,
+  banner: { text, img_url: imgUrl },
+};
 export const elementsReducer = (state = initialState, action = {}) => {
   const { type, payload } = action;
   switch (type) {
     case LOAD_ELEMENTS_SUCCESS: {
       const { elements } = payload;
-      return { ...state, isLoading: false, data: elements };
+      return {
+        ...state, elementsIsLoading: false, data: elements,
+      };
     }
     case LOAD_ELEMENTS_IN_PROGRESS:
       return {
-        ...state, isLoading: true,
+        ...state, elementsIsLoading: true,
       };
     case LOAD_ELEMENTS_FAILURE:
       return {
         ...state,
-        isLoading: false,
+        elementsIsLoading: false,
       };
-    case LOAD_ELEMENT_DETAILS: {
+
+    case LOAD_ELEMENT_DATA_SUCCESS: {
       const { id, elemData } = payload;
-
       const addData = element => (element.anime_id === id ? { ...element, elemData } : element);
-
-      return { ...state, data: state.data.map(addData) };
+      const newState = { ...state, detailsIsLoading: false, data: state.data.map(addData) };
+      return newState;
     }
+    case LOAD_ELEMENT_DATA_IN_PROGRESS: {
+      return {
+        ...state, detailsIsLoading: true,
+      };
+    }
+    case LOAD_ELEMENT_DATA_FAILURE:
+      return {
+        ...state,
+        detailsIsLoading: false,
+      };
+
     case MODIFY_BANNER: {
-      return payload ? { ...state, banner: payload } : { ...state, banner: InitialBanner };
+      return payload ? { ...state, banner: payload }
+        : { ...state, banner: { ...state.baner, text, img_url: imgUrl } };
     }
     // do reducer stuff
     default: return state;
@@ -75,8 +91,13 @@ const loadElementsSuccess = elements => ({ type: LOAD_ELEMENTS_SUCCESS, payload:
 
 const loadElementsFailure = () => ({ type: LOAD_ELEMENTS_FAILURE });
 
-const AddElementDetails = (id, elemData) => (
-  { type: LOAD_ELEMENT_DETAILS, payload: { id, elemData } });
+const loadElementDataInProgress = () => ({ type: LOAD_ELEMENTS_IN_PROGRESS });
+
+const loadElementDataSuccess = (id, elemData) => (
+  { type: LOAD_ELEMENT_DATA_SUCCESS, payload: { id, elemData } });
+
+const loadElementDataFailure = () => ({ type: LOAD_ELEMENTS_FAILURE });
+
 // side effects, only as applicable
 // e.g. thunks, epics, etc
 
@@ -97,13 +118,13 @@ export const loadElements = () => (
 export const loadElementDetails = (id, animeName) => (
   async dispatch => {
     try {
+      dispatch(loadElementDataInProgress());
       const response = await fetch(`https://anime-facts-rest-api.herokuapp.com/api/v1/${animeName}`);
       const obj = await response.json();
       const elmentsData = await obj.data;
-      dispatch(AddElementDetails(id, elmentsData));
-      dispatch(modifyBanner(id));
+      dispatch(loadElementDataSuccess(id, elmentsData));
     } catch (e) {
-      dispatch(loadElementsFailure());
+      dispatch(loadElementDataFailure());
     }
   }
 );
