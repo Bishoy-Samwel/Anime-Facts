@@ -1,11 +1,17 @@
+import { PropTypes } from 'prop-types';
 import styles from './PageInfo.module.scss';
 
-function PageInfo() {
+function PageInfo(props) {
+  const { title } = props;
   return (
     <div className={styles['page-info']}>
-      <p>Page Info</p>
+      <p>{title}</p>
     </div>
   );
 }
 
 export default PageInfo;
+
+PageInfo.propTypes = {
+  title: PropTypes.string.isRequired,
+};

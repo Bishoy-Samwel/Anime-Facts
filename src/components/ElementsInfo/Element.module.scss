@@ -18,8 +18,10 @@
 
   .bottom {
     position: absolute;
-    right: 10%;
-    bottom: 10%;
+    right: 5%;
+    bottom: 5%;
+    text-transform: uppercase;
+    text-align: end;
   }
 
   .nav-arrow {
@@ -35,5 +37,7 @@
 }
 
 img {
-  width: 70%;
+  max-width: 100%;
+  height: auto;
+  display: block;
 }

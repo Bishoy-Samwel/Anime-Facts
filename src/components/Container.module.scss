@@ -1,11 +1,14 @@
 @use "../styles/variables" as *;
 
 .container {
-  font-size: large;
-  font-weight: bolder;
+  font-size: larger;
+  font-weight: 1000;
   color: $font-color;
 }
 
 img {
-  filter: opacity(0.1) grayscale(10%);
+  max-height: 200px;
+  max-width: 500px;
+  border-radius: 30px;
+  filter: opacity(0.6) grayscale(10%);
 }

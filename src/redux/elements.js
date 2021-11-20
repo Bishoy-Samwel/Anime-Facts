@@ -1,6 +1,13 @@
 // Actions
-const LOAD_ELEMENTS = 'LOAD_ELEMENTS';
+
 const MODIFY_BANNER = 'MODIFY_BANNER';
+const FILTER_EMENETS = 'FILTER_EMENETS';
+const LOAD_ELEMENTS_IN_PROGRESS = 'LOAD_ELEMENTS_IN_PROGRESS';
+const LOAD_ELEMENTS_SUCCESS = 'LOAD_ELEMENTS_SUCCESS';
+const LOAD_ELEMENTS_FAILURE = 'LOAD_ROCKETS_FAILURE';
+const LOAD_ELEMENT_DATA_IN_PROGRESS = 'LOAD_ELEMENT_DATA_IN_PROGRESS';
+const LOAD_ELEMENT_DATA_SUCCESS = 'LOAD_ELEMENT_DATA_SUCCESS';
+const LOAD_ELEMENT_DATA_FAILURE = 'LOAD_ELEMENT_DATA_FAILURE';
 // Reducer
 const InitialData = [
   {
@@ -21,33 +28,114 @@ const InitialData = [
   {
     id: '6', name: 'Italy', number: '6', imgUrl: 'http://pngimg.com/uploads/chess/chess_PNG8443.png', details: { start: '1996', end: '2026' },
   },
-  {
-    id: '7', name: 'Italy', number: '7', imgUrl: 'http://pngimg.com/uploads/chess/chess_PNG8443.png', details: { start: '1996', end: '2027' },
-  },
-  {
-    id: '8', name: 'Italy', number: '8', imgUrl: 'http://pngimg.com/uploads/chess/chess_PNG8443.png', details: { start: '1996', end: '2028' },
-  },
 ];
 
-const InitialBanner = 'Banner Text';
+const imgUrl = 'https://www.pngall.com/wp-content/uploads/2/Manga-PNG-Picture.png';
+const text = 'Did you know!!';
 
-const initialState = { data: InitialData, banner: InitialBanner };
+const initialState = {
+  elementsIsLoading: false,
+  detailsIsLoading: false,
+  data: InitialData,
+  banner: { text, img_url: imgUrl },
+  filter: '',
+};
 export const elementsReducer = (state = initialState, action = {}) => {
   const { type, payload } = action;
   switch (type) {
-    case LOAD_ELEMENTS: {
-      return state.data;
+    case FILTER_EMENETS:
+    {
+      if (payload.trim()) return ({ ...state, filter: payload });
+      return state;
     }
+
     case MODIFY_BANNER: {
-      return payload ? { ...state, banner: payload } : { ...state, banner: InitialBanner };
+      return payload ? { ...state, banner: payload }
+        : { ...state, banner: { ...state.baner, text, img_url: imgUrl } };
     }
+
+    case LOAD_ELEMENTS_SUCCESS: {
+      const { elements } = payload;
+      return {
+        ...state, elementsIsLoading: false, data: elements,
+      };
+    }
+    case LOAD_ELEMENTS_IN_PROGRESS:
+      return {
+        ...state, elementsIsLoading: true,
+      };
+    case LOAD_ELEMENTS_FAILURE:
+      return {
+        ...state,
+        elementsIsLoading: false,
+      };
+
+    case LOAD_ELEMENT_DATA_SUCCESS: {
+      const { id, elemData } = payload;
+      const addData = element => (element.anime_id === id ? { ...element, elemData } : element);
+      const newState = { ...state, detailsIsLoading: false, data: state.data.map(addData) };
+      return newState;
+    }
+    case LOAD_ELEMENT_DATA_IN_PROGRESS: {
+      return {
+        ...state, detailsIsLoading: true,
+      };
+    }
+    case LOAD_ELEMENT_DATA_FAILURE:
+      return {
+        ...state,
+        detailsIsLoading: false,
+      };
+
     // do reducer stuff
     default: return state;
   }
 };
 // Action Creators
-export const loadElements = () => ({ type: LOAD_ELEMENTS });
 export const modifyBanner = obj => ({ type: MODIFY_BANNER, payload: obj });
+
+export const filterElements = term => ({ type: FILTER_EMENETS, payload: term });
+
+const loadElementsInProgress = () => ({ type: LOAD_ELEMENTS_IN_PROGRESS });
+
+const loadElementsSuccess = elements => ({ type: LOAD_ELEMENTS_SUCCESS, payload: { elements } });
+
+const loadElementsFailure = () => ({ type: LOAD_ELEMENTS_FAILURE });
+
+const loadElementDataInProgress = () => ({ type: LOAD_ELEMENTS_IN_PROGRESS });
+
+const loadElementDataSuccess = (id, elemData) => (
+  { type: LOAD_ELEMENT_DATA_SUCCESS, payload: { id, elemData } });
+
+const loadElementDataFailure = () => ({ type: LOAD_ELEMENTS_FAILURE });
 
 // side effects, only as applicable
 // e.g. thunks, epics, etc
+
+export const loadElements = () => (
+  async dispatch => {
+    try {
+      dispatch(loadElementsInProgress());
+      const response = await fetch('https://anime-facts-rest-api.herokuapp.com/api/v1');
+      const obj = await response.json();
+      const elmentsData = await obj.data;
+      dispatch(loadElementsSuccess(elmentsData));
+    } catch (e) {
+      dispatch(loadElementsFailure());
+    }
+  }
+);
+
+export const loadElementDetails = (id, animeName) => (
+  async dispatch => {
+    try {
+      dispatch(loadElementDataInProgress());
+      const response = await fetch(`https://anime-facts-rest-api.herokuapp.com/api/v1/${animeName}`);
+      const obj = await response.json();
+      const elmentsData = await obj.data;
+      dispatch(loadElementDataSuccess(id, elmentsData));
+    } catch (e) {
+      dispatch(loadElementDataFailure());
+    }
+  }
+);

@@ -1,0 +1,24 @@
+@use "../styles/variables" as *;
+
+.search-box {
+  background-color: $banner-color;
+
+  ::placeholder {
+    color: white;
+    opacity: 0.8;
+  }
+
+  input[type="text"] {
+    background-color: $banner-color;
+    border: none;
+    color: white;
+    font-size: x-large;
+    width: 98%;
+    padding: 1%;
+    opacity: 0.9;
+  }
+
+  input:focus {
+    outline: none !important;
+  }
+}

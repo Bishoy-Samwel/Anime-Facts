@@ -1,23 +1,22 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { getElement, detailsIsLoading } from '../selectors';
 import Detail from './Detail';
-import { getElement } from '../selectors';
 
-export const Details = () => {
-  const { details } = useSelector(getElement('1'))[0];
-  return (
-    <div>
-      {
-        // eslint-disable-next-line max-len
-        Object.keys(details).map(detailKey => <Detail key={detailKey} detailKey={detailKey} detail={details[detailKey]} />)
-      }
-    </div>
-  );
+const Details = () => {
+  const itemId = Number(useParams().itemId);
+  const element = useSelector(getElement(itemId));
+  const detailsLoading = useSelector(detailsIsLoading);
+
+  if (!detailsLoading && element.elemData) {
+    return (element.elemData.map(detail => <Detail key={element.anime_id} detail={detail.fact} />));
+  }
+  return ('wait a minute');
 };
 
 Element.propTypes = {
   element: PropTypes.shape.isRequired,
 };
 
-export default Element;
+export default Details;
