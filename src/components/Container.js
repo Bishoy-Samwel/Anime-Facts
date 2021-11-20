@@ -14,15 +14,18 @@ import Search from './Search';
 function Container() {
   return (
     <div className={styles.container}>
-      <Header />
-      <Banner />
-      <PageInfo />
       <Switch>
         <Route exact path="/">
+          <Header title="Animes Facts" />
+          <Banner />
+          <PageInfo title="List of Animes" />
           <Search />
           <Elements />
         </Route>
         <Route path="/details/:itemId">
+          <Header title="Facts" />
+          <Banner />
+          <PageInfo title="Anime facts" />
           <Details />
         </Route>
       </Switch>
