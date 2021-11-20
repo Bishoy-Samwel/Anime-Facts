@@ -13,8 +13,7 @@ A mobile web application that checks a list of Animes that is been created from 
 - CSS
 - JAVASCRIPT
 - React && Redux
-## Live Demo
-[Live Demo Link](https://dreamy-booth-15f786.netlify.app/)
+
 
 ## To get a local copy run the following steps:
 - Copy [this link](https://github.com/Bishoy-Samwel/React-Capstone)
