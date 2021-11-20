@@ -2,11 +2,11 @@ import { useSelector } from 'react-redux';
 import styles from './Banner.module.scss';
 
 const Banner = () => {
-  const text = useSelector(state => state.elements.banner);
+  const banner = useSelector(state => state.elements.banner);
   const content = text => (
     <div className={styles['banner-div']}>
       <div className={styles['element-left']}>
-        <img src="http://pngimg.com/uploads/chess/chess_PNG8443.png" alt="chess-family" />
+        <img src={banner.img_url} alt="Anime`" />
       </div>
       <div className={styles['element-right']}>
         {text}
@@ -15,7 +15,7 @@ const Banner = () => {
   );
 
   return (
-    content(text)
+    content(banner.text)
   );
 };
 
