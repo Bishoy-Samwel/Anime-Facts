@@ -1,0 +1,24 @@
+@use "../../styles/variables" as *;
+
+.detail-div {
+  display: flex;
+  justify-content: space-between;
+  padding: 5% 20px;
+
+  .left-div {
+    display: flex;
+    align-items: center;
+  }
+
+  span {
+    padding-right: 20px;
+  }
+}
+
+.detail-div:nth-child(odd) {
+  background-color: $element-color-1;
+}
+
+.detail-div:nth-child(even) {
+  background-color: $element-color-2;
+}
