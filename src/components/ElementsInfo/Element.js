@@ -2,17 +2,20 @@
 import React from 'react';
 import { BsArrowRightCircle } from 'react-icons/bs';
 import { NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
+import { useDispatch } from 'react-redux';
 import styles from './Element.module.scss';
-import { modifyBanner } from '../../redux/elements';
+import { loadElementDetails, modifyBanner } from '../../redux/elements';
 
 const Element = props => {
   const dispatch = useDispatch();
   const { element } = props;
   const animeName = (element.anime_name) ? element.anime_name.replace(/_/g, ' ') : '';
   const clickHanlder = () => {
-    dispatch(modifyBanner(element.anime_id));
+    if (!element.elemData) {
+      dispatch(loadElementDetails(element.anime_id, element.anime_name));
+    }
+    dispatch(modifyBanner({ text: animeName, img_url: element.anime_img }));
   };
   return (
     <div className={styles['element-div']} key={element.anime_id}>
