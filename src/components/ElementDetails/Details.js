@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import { getElement, detailsIsLoading } from '../selectors';
 import Detail from './Detail';
 
-export const Details = () => {
+const Details = () => {
   const itemId = Number(useParams().itemId);
   const element = useSelector(getElement(itemId));
   const detailsLoading = useSelector(detailsIsLoading);
@@ -22,4 +22,4 @@ Element.propTypes = {
   element: PropTypes.shape.isRequired,
 };
 
-export default Element;
+export default Details;
