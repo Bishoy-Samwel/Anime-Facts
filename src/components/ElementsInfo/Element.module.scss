@@ -1,0 +1,43 @@
+@use "../../styles/variables" as *;
+
+.element-div {
+  min-height: 200px;
+  max-width: 50%;
+  min-width: 50%;
+  background-color: $element-color-1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .top {
+    display: flex;
+    justify-content: center;
+  }
+
+  .bottom {
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
+    text-transform: uppercase;
+    text-align: end;
+  }
+
+  .nav-arrow {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+}
+
+.element-div:nth-child(4n + 2),
+.element-div:nth-child(4n + 3) {
+  background-color: $element-color-2;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
