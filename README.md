@@ -18,7 +18,7 @@ A mobile web application that checks a list of Animes that is been created from 
 - https://anime-facts.herokuapp.com/
 
 ## Video Demo 
-https://www.youtube.com/watch?v=Jmk9zcwe2gg
+<!-- https://www.youtube.com/watch?v=Jmk9zcwe2gg -->
 
 ## Getting Started
 
